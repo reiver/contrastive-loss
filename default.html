@@ -31,10 +31,210 @@
 		The <strong>Contrastive Loss</strong> is a <strong>loss function</strong> and <strong>objective function</strong> used in <strong>artificial intelligence</strong> (<strong><abbr title="artificial intelligence">AI</abbr></strong>) and <strong>machine learning</strong> (<strong><abbr title="machine learning">ML</abbr></strong>).
 	</p>
 	<section>
+		<h1>Problem (Images)</h1>
+		<p>
+			Here is the problem trying to be solved by <strong>contrastive loss</strong>.
+		</p>
+		<p>
+			Imagine we are dealing photo images.
+		</p>
+		<p>
+			Our goal would be to make it so that similar images end up close together, and differnt images end up further apart.
+		</p>
+	</section>
+	<section>
+		<h1>Problem (Audio)</h1>
+		<p>
+			If, however, we were are dealing with audio from people speaking, then the problem trying to be solved by <strong>contrastive loss</strong> would be —
+		</p>
+		<p>
+			Our goal wold be to make it so that speech from the same person end up close together, while speach from different people end up further apart.
+		</p>
+	</section>
+	<section>
+		<h1>Appoach</h1>
+		<p>
+			Let's give some more details to make what is going on more obvious.
+		</p>
+		<p>
+			Imagine we are dealing with 100x100 black-and-white photo images.
+		</p>
+		<p>
+			Most models want their input to be a vector, so we can turn these 100x100 image into a 10,000 dimensional vector.
+			Because 10,000 = 100 x 100.
+			We just need to create some convention with mapping the pixels in the image to a vector.
+			For example:
+		</p>
+		<ul>
+			<li>
+				pixel (0,0) in the image goes to position 0 of the vector.
+			</li>
+			<li>
+				pixel (1,0) in the image goes to position 1 of the vector.
+			</li>
+			<li>
+				pixel (2,0) in the image goes to position 2 of the vector.
+			</li>
+			<li>
+				…
+			</li>
+			<li>
+				pixel (99,0) in the image goes to position 99 of the vector.
+			</li>
+			<li>
+				pixel (0,1) in the image goes to position 100 of the vector.
+			</li>
+			<li>
+				pixel (1,1) in the image goes to position 101 of the vector.
+			</li>
+			<li>
+				pixel (2,1) in the image goes to position 102 of the vector.
+			</li>
+			<li>
+				pixel (3,1) in the image goes to position 103 of the vector.
+			</li>
+			<li>
+				…
+			</li>
+			<li>
+				pixel (99,1) in the image goes to position 199 of the vector.
+			</li>
+			<li>
+				pixel (0,2) in the image goes to position 200 of the vector.
+			</li>
+			<li>
+				pixel (1,2) in the image goes to position 201 of the vector.
+			</li>
+			<li>
+				pixel (2,2) in the image goes to position 202 of the vector.
+			</li>
+			<li>
+				… … …
+			</li>
+			<li>
+				pixel (98,99) in the image goes to position 9,998 of the vector.
+			</li>
+			<li>
+				pixel (99,99) in the image goes to position 9,999 of the vector.
+			</li>
+		</ul>
+		<p>
+			We could do this image pixel to vector mapping differently.
+			We just use the same mapping for all images.
+		</p>
+		<p>
+			So, having said that, we are dealing with 10,000 dimensional vectors.
+			(Each 100x100 black-and-white photo image is now a 10,000 dimensional vectors.)
+		</p>
+		<p>
+			What we want to be able to do is map our 10,000 dimensional vectors to a much smaller dimensional vector.
+			Maybe:
+		</p>
+		<figure>
+			<pre>
+   10,000 dimensional vector
+             ↓
+2 dimentional (embedding) vector
+			</pre>
+		</figure>
+		<p>
+			Or, maybe:
+		</p>
+		<figure>
+			<pre>
+   10,000 dimensional vector
+             ↓
+128 dimentional (embedding) vector
+			</pre>
+		</figure>
+		<p>
+			Or, maybe:
+		</p>
+		<figure>
+			<pre>
+   10,000 dimensional vector
+             ↓
+256 dimentional (embedding) vector
+			</pre>
+		</figure>
+		<p>
+			Or, whatever.
+		</p>
+		<p>
+			We might consider using <abbr title="locally linear embedding">LLE</abbr> or isomap, but these have two major problems (with respect to our goals).
+		</p>
+		<dl>
+			<dt>problem 1</dt>
+			<dd>
+				<p>
+					What <abbr title="locally linear embedding">LLE</abbr> or isomap learn are <em>not</em> reusable function.
+				</p>
+				<p>
+					Meaning — although the function you get from <abbr title="locally linear embedding">LLE</abbr> or isomap can map the photo images in the training data to a lower dimensional vector, it cannot a new image (that was not in the training data) to a lower dimensional vector.
+					The function you get from <abbr title="locally linear embedding">LLE</abbr> or isomap doesn't know what to do with a new image (not seen in the training data).
+				</p>
+			</dd>
+
+			<dt>problem 2</dt>
+			<dd>
+				<p>
+					These types of algorithms (such as <abbr title="locally linear embedding">LLE</abbr> or isomap) usually require a <strong>distance metric</strong> in the original space.
+				</p>
+				<p>
+					For our example of 100x100 black-and-white photo images, which we represent as 10,000 dimensional vectors
+					—
+					these types of algorithms would want a <strong>distance metric</strong> for these 10,000 dimensional vectors.
+				</p>
+				<p>
+					Most people are probably aware of <strong>euclidean distance</strong>.
+					And, may have seen it written as:
+				</p>
+				<figure>
+					<math xmlns="http://www.w3.org/1998/Math/MathML">
+						<apply>
+							<eq />
+							<ci>d</ci>
+							<apply>
+								<root />
+								<apply>
+									<plus />
+									<apply>
+										<power />
+										<apply>
+											<minus />
+											<ci>x2</ci>
+											<ci>x1</ci>
+										</apply>
+										<cn>2</cn>
+									</apply>
+									<apply>
+										<power />
+										<apply>
+											<minus />
+											<ci>y2</ci>
+											<ci>y1</ci>
+										</apply>
+										<cn>2</cn>
+									</apply>
+								</apply>
+							</apply>
+						</apply>
+					</math>
+				</figure>
+			</dd>
+		</dl>
+	</section>
+	<section>
 		<h1>See Also</h1>
 		<ul>
 			<li>
 				<a href="/artificial-intelligence/">Artificial Intelligence (<abbr title="artificial intelligence">AI</abbr>)</a>
+			</li>
+			<li>
+				<a href="/distance-metric/">Distance Metric</a>
+			</li>
+			<li>
+				<a href="/dimensionality-reduction/">Dimensionality Reduction</a>
 			</li>
 			<li>
 				<a href="/loss-function/">Loss Function</a>
