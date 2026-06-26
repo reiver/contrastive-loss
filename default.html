@@ -190,72 +190,62 @@
 					And, may have seen it written as:
 				</p>
 				<figure>
-					<math xmlns="http://www.w3.org/1998/Math/MathML">
-						<apply>
-							<eq />
-							<ci>d</ci>
-							<apply>
-								<root />
-								<apply>
-									<plus />
-									<apply>
-										<power />
-										<apply>
-											<minus />
-											<ci>x2</ci>
-											<ci>x1</ci>
-										</apply>
-										<cn>2</cn>
-									</apply>
-									<apply>
-										<power />
-										<apply>
-											<minus />
-											<ci>y2</ci>
-											<ci>y1</ci>
-										</apply>
-										<cn>2</cn>
-									</apply>
-								</apply>
-							</apply>
-						</apply>
+					<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+						<mi>d</mi>
+						<mo>=</mo>
+						<msqrt>
+							<msup>
+								<mrow>
+									<mo>(</mo>
+										<msub><mi>x</mi><mn>2</mn></msub>
+											<mo>-</mo>
+										<msub><mi>x</mi><mn>1</mn></msub>
+									<mo>)</mo>
+								</mrow>
+								<mn>2</mn>
+							</msup>
+							<mo>+</mo>
+							<msup>
+								<mrow>
+									<mo>(</mo>
+										<msub><mi>y</mi><mn>2</mn></msub>
+											<mo>-</mo>
+										<msub><mi>y</mi><mn>1</mn></msub>
+									<mo>)</mo>
+								</mrow>
+								<mn>2</mn>
+							</msup>
+						</msqrt>
 					</math>
 				</figure>
 				<p>
 					Or, more generally as:
 				</p>
 				<figure>
-					<math xmlns="http://www.w3.org/1998/Math/MathML">
-						<apply>
-							<eq />
-							<ci>d</ci>
-							<apply>
-								<root />
-								<apply>
-									<sum />
-									<bvar><ci>i</ci></bvar>
-									<lowlimit><cn>1</cn></lowlimit>
-									<uplimit><ci>n</ci></uplimit>
-									<apply>
-										<power />
-										<apply>
-											<minus />
-											<apply>
-												<selector />
-												<ci>x</ci>
-												<ci>i</ci>
-											</apply>
-											<apply>
-												<selector />
-												<ci>y</ci>
-												<ci>i</ci>
-											</apply>
-										</apply>
-										<cn>2</cn>
-									</apply>
-								</apply>
-							</apply>
-						</apply>
+					<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+						<mi>d</mi>
+						<mo>=</mo>
+						<msqrt>
+							<munderover>
+							<mo>∑</mo>
+							<mrow>
+								<mi>i</mi>
+								<mo>=</mo>
+								<mn>1</mn>
+							</mrow>
+							<mi>n</mi>
+							</munderover>
+							<msup>
+								<mrow>
+									<mo>(</mo>
+										<msub><mi>x</mi><mi>i</mi></msub>
+										<mo>-</mo>
+										<msub><mi>y</mi><mi>i</mi></msub>
+									<mo>)</mo>
+								</mrow>
+								<mn>2</mn>
+							</msup>
+						</msqrt>
 					</math>
 				</figure>
 			</dd>
