@@ -256,8 +256,35 @@
 					Even though to us these to images as almost exactly the same — they would have a large (probably hufe) distance apart under <em>euclidean distance</em>.
 					So, <em>euclidean distance</em> won't work.
 				</p>
+				<p>
+					But, the problem is more general.
+					Having to have a <em>distance metric</em> in the original space (i.e., the 10,000 dimensional vector's space) is the problem.
+				</p>
 			</dd>
 		</dl>
+		<p>
+			So, what to do.
+			Well, we don't use <abbr title="locally linear embedding">LLE</abbr> or isomap for <em>dimensionality reduction</em>.
+			And, rather than having a <em>distance metric</em> in the original space (i.e., the 10,000 dimensional vector's space) we provide information about whever two images (i.e., two 10,000 dimensional vector) should be considered <em>close</em> to each other, or <em>far</em> from each other.
+			For this (<em>close</em> versus <em>far</em>) information, this could come from:
+		</p>
+		<ul>
+			<li>
+				augmentations
+			</li>
+			<li>
+				human annotation
+			</li>
+			<li>
+				labels
+			</li>
+			<li>
+				temporal continuity
+			</li>
+		</ul>
+		<p>
+			We only need pairs of images (i.e., pairs of 10,000 dimensional vector) for which we either say <em>they are similar</em> (and thus <em>close</em>) or <em>they are <strong>not</strong> similar</em> (and thus <em>far</em>).
+		</p>
 	</section>
 	<section>
 		<h1>See Also</h1>
